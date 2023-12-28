@@ -1,12 +1,9 @@
 import streamlit as st
 from fpdf import FPDF
-from io import BytesIO
 import pandas as pd
 from datetime import datetime
-import os
 
 def get_allowed_interns():
-    # Read the allowed interns from Intern_List.xlsx
     df = pd.read_excel("Intern_List.xlsx")
     allowed_interns = set((df["Intern Name"] + "_" + df["Email"]).str.lower())
     return allowed_interns
@@ -20,11 +17,9 @@ def generate_agreement(name, email, contact_number, date):
     logo_width = 30
     page_width = pdf.w
     x_position = (page_width - logo_width) / 2
-
     pdf.image("Predictram_logo.png", x=x_position, y=10, w=logo_width)
 
     # Add content to the PDF
-    # Adjust Y-coordinate to align date with the logo
     pdf.cell(200, 10, txt=f"Date: {date}", ln=True, align='L') 
 
     pdf.multi_cell(0, 10, txt=f"Dear {name},\n\n"
@@ -46,13 +41,6 @@ def save_log(name, email):
     log_entry = f"{timestamp} - {name} ({email}) generated a PDF\n"
 
     log_file_path = "pdf_generation_log.txt"
-
-    # Check if the log file exists, create it if not
-    if not os.path.isfile(log_file_path):
-        with open(log_file_path, "w") as log_file:
-            log_file.write("Timestamp - User (Email) Action\n")
-
-    # Append the log entry
     with open(log_file_path, "a") as log_file:
         log_file.write(log_entry)
 
@@ -83,6 +71,8 @@ def main():
                 st.download_button(label="Download Agreement", data=pdf_data, file_name="PredictRAM_Agreement.pdf", key="download_button")
             else:
                 st.error("You are not authorized to download the agreement.")
-    
+        else:
+            st.error("Please fill in all required fields.")
+
 if __name__ == "__main__":
     main()
