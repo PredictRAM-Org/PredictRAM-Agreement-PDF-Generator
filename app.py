@@ -3,7 +3,7 @@ def generate_agreement(name, email, contact_number, date, intern_location):
     pdf.add_page()
 
     # Add company logo at the top of the page
-    pdf.image("path/to/company_logo.png", x=10, y=10, w=30)
+    pdf.image("Predictram_logo.png", x=10, y=10, w=30)
 
     pdf.set_font("Arial", size=12)
 
