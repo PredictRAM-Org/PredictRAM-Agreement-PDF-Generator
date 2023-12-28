@@ -2,12 +2,13 @@ import streamlit as st
 from fpdf import FPDF
 from io import BytesIO
 
-def generate_agreement(name, email, contact_number, date, intern_location):
+def generate_agreement(name, email, contact_number, date):
     pdf = FPDF()
     pdf.add_page()
+    pdf.set_font("Arial", size=12)
 
-    # Add company logo at the top of the page
-    pdf.image("Predictram_logo.png", x=10, y=10, w=30)
+# Add the company logo at the top of the page
+    pdf.image("path/to/Predictram_logo.png", x=10, y=10, w=30)
 
     pdf.set_font("Arial", size=12)
 
@@ -26,28 +27,7 @@ def generate_agreement(name, email, contact_number, date, intern_location):
                                f"Congratulations!\n"
                                f"Team PredictRAM", align='L')
 
-    # Add Annexure A
-    pdf.ln(10)
-    pdf.cell(200, 10, txt="Training & Training & Internship Agreement", ln=True, align='C')
-    pdf.ln(10)
-    pdf.cell(200, 10, txt="This Training & Training & Internship Agreement (this “Agreement”) is hereby entered into Day.", ln=True, align='L')
-    pdf.cell(200, 10, txt="(“Effective Date”) - between the Intern and Company noted below, with respect to the Services and Project defined herein below.", ln=True, align='L')
-    pdf.ln(10)
-    pdf.cell(200, 10, txt="Intern Name:", ln=True, align='L')
-    pdf.cell(200, 10, txt=f"{name}", ln=True, align='L')
-    pdf.cell(200, 10, txt="Intern Email:", ln=True, align='L')
-    pdf.cell(200, 10, txt=f"{email}", ln=True, align='L')
-    pdf.cell(200, 10, txt="Contact Number:", ln=True, align='L')
-    pdf.cell(200, 10, txt=f"{contact_number}", ln=True, align='L')
-    pdf.cell(200, 10, txt="Intern Location:", ln=True, align='L')
-    pdf.cell(200, 10, txt=f"{intern_location}", ln=True, align='L')  # <-- Added this line
-
-    # ... (rest of the Annexure A content)
-
-    # Use 'latin-1' encoding
-    pdf_data = pdf.output(dest='S').encode('latin-1')
-    
-    return pdf_data
+    return pdf.output(dest='S').encode('latin1')
 
 def main():
     st.title("PredictRAM Agreement Generator")
@@ -57,12 +37,11 @@ def main():
     email = st.text_input("Your Email:")
     contact_number = st.text_input("Contact Number:")
     date = st.text_input("Date:")
-    intern_location = st.text_input("Intern Location:")
 
     if st.button("Generate Agreement"):
-        if name and email and contact_number and date and intern_location:
+        if name and email and contact_number and date:
             # Generate the PDF
-            pdf_data = generate_agreement(name, email, contact_number, date, intern_location)
+            pdf_data = generate_agreement(name, email, contact_number, date)
 
             # Download the PDF
             st.download_button(label="Download Agreement", data=pdf_data, file_name="PredictRAM_Agreement.pdf", key="download_button")
