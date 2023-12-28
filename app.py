@@ -1,3 +1,7 @@
+import streamlit as st
+from fpdf import FPDF
+from io import BytesIO
+
 def generate_agreement(name, email, contact_number, date, intern_location):
     pdf = FPDF()
     pdf.add_page()
