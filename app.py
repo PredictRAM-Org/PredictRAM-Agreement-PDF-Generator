@@ -7,10 +7,16 @@ def generate_agreement(name, email, contact_number, date):
     pdf.add_page()
     pdf.set_font("Arial", size=12)
 
-    # Add company logo at the top of the page
-    pdf.image("Predictram_logo.png", x=10, y=10, w=30)
+    # Add company logo at the center of the page
+    logo_width = 30
+    page_width = pdf.w
+    x_position = (page_width - logo_width) / 2
+
+    pdf.image("Predictram_logo.png", x=x_position, y=10, w=logo_width)
 
     # Add content to the PDF
+    # Adjust Y-coordinate to align date with the logo
+    pdf.cell(200, 10, txt=f"Date: {date}", ln=True, align='L') 
 
     pdf.multi_cell(0, 10, txt=f"Dear {name},\n\n"
                                f"I am delighted & excited to welcome you to PredictRAM for Risk & Asset Management Training cum "
@@ -23,9 +29,7 @@ def generate_agreement(name, email, contact_number, date):
                                f"Also, please sign the duplicate of this offer as your acceptance and forward the same to us.\n\n"
                                f"Congratulations!\n"
                                f"Team PredictRAM", align='L')
-    
-# Adjust Y-coordinate to align date with the logo
-    pdf.cell(200, 10, txt=f"Date: {date}", ln=True, align='L') 
+
     return pdf.output(dest='S').encode('latin1')
 
 def main():
