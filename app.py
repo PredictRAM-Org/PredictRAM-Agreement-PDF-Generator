@@ -44,7 +44,10 @@ def generate_agreement(name, email, contact_number, date, intern_location):
 
     # ... (rest of the Annexure A content)
 
-    return pdf.output(dest='S').encode('latin1')
+    # Use 'latin-1' encoding
+    pdf_data = pdf.output(dest='S').encode('latin-1')
+    
+    return pdf_data
 
 def main():
     st.title("PredictRAM Agreement Generator")
@@ -54,7 +57,7 @@ def main():
     email = st.text_input("Your Email:")
     contact_number = st.text_input("Contact Number:")
     date = st.text_input("Date:")
-    intern_location = st.text_input("Intern Location:")  # <-- Added this line
+    intern_location = st.text_input("Intern Location:")
 
     if st.button("Generate Agreement"):
         if name and email and contact_number and date and intern_location:
