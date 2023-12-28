@@ -3,6 +3,7 @@ from fpdf import FPDF
 from io import BytesIO
 import pandas as pd
 from datetime import datetime
+import os
 
 def get_allowed_interns():
     # Read the allowed interns from Intern_List.xlsx
@@ -43,7 +44,16 @@ def generate_agreement(name, email, contact_number, date):
 def save_log(name, email):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     log_entry = f"{timestamp} - {name} ({email}) generated a PDF\n"
-    with open("pdf_generation_log.txt", "a") as log_file:
+
+    log_file_path = "pdf_generation_log.txt"
+
+    # Check if the log file exists, create it if not
+    if not os.path.isfile(log_file_path):
+        with open(log_file_path, "w") as log_file:
+            log_file.write("Timestamp - User (Email) Action\n")
+
+    # Append the log entry
+    with open(log_file_path, "a") as log_file:
         log_file.write(log_entry)
 
 def main():
