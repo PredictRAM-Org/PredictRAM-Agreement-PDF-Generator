@@ -2,6 +2,7 @@ import streamlit as st
 from fpdf import FPDF
 from io import BytesIO
 import pandas as pd
+from datetime import datetime
 
 def get_allowed_interns():
     # Read the allowed interns from Intern_List.xlsx
@@ -19,7 +20,7 @@ def generate_agreement(name, email, contact_number, date):
     page_width = pdf.w
     x_position = (page_width - logo_width) / 2
 
-    pdf.image("Predictram_logo.png", x=x_position, y=10, w=logo_width)
+    pdf.image("path/to/company_logo.png", x=x_position, y=10, w=logo_width)
 
     # Add content to the PDF
     # Adjust Y-coordinate to align date with the logo
@@ -38,6 +39,12 @@ def generate_agreement(name, email, contact_number, date):
                                f"Team PredictRAM", align='L')
 
     return pdf.output(dest='S').encode('latin1')
+
+def save_log(name, email):
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    log_entry = f"{timestamp} - {name} ({email}) generated a PDF\n"
+    with open("pdf_generation_log.txt", "a") as log_file:
+        log_file.write(log_entry)
 
 def main():
     st.title("PredictRAM Agreement Generator")
@@ -58,6 +65,9 @@ def main():
             if user_key in allowed_interns:
                 # Generate the PDF
                 pdf_data = generate_agreement(name, email, contact_number, date)
+
+                # Save log
+                save_log(name, email)
 
                 # Download the PDF
                 st.download_button(label="Download Agreement", data=pdf_data, file_name="PredictRAM_Agreement.pdf", key="download_button")
