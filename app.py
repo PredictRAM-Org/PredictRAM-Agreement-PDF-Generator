@@ -8,7 +8,7 @@ def generate_agreement(name, email, contact_number, date):
     pdf.set_font("Arial", size=12)
 
 # Add the company logo at the top of the page
-    pdf.image("path/to/Predictram_logo.png", x=10, y=10, w=30)
+    pdf.image("Predictram_logo.png", x=10, y=10, w=30)
 
     pdf.set_font("Arial", size=12)
 
