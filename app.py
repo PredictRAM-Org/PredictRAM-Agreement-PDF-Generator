@@ -14,7 +14,7 @@ def generate_agreement(name, email, contact_number, date):
     pdf.set_font("Arial", size=12)
 
     # Add company logo at the center of the page
-    logo_width = 30
+    logo_width = 50
     page_width = pdf.w
     x_position = (page_width - logo_width) / 2
     pdf.image("Predictram_logo.png", x=x_position, y=10, w=logo_width)
