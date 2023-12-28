@@ -20,7 +20,7 @@ def generate_agreement(name, email, contact_number, date):
     page_width = pdf.w
     x_position = (page_width - logo_width) / 2
 
-    pdf.image("path/to/company_logo.png", x=x_position, y=10, w=logo_width)
+    pdf.image("Predictram_logo.png", x=x_position, y=10, w=logo_width)
 
     # Add content to the PDF
     # Adjust Y-coordinate to align date with the logo
